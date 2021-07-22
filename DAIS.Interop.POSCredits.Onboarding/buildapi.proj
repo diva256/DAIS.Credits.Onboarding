@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <Definition>$(MSBuildProjectDirectory)\definitions\swagger.json</Definition>
+    <ClientCode>$(MSBuildProjectDirectory)\client.cs</ClientCode>
+  </PropertyGroup>
+
+  <Target Name="PostBuild" AfterTargets="Build">
+
+    <Exec Command="$(NSwagExe) swagger2csclient  /input:$(Definition) /output:$(ClientCode) /namespace:DAIS.Interop.POSCredits.Onboarding /dateType:System.DateTime /dateTimeType:System.DateTime /useBaseUrl:false /generateBaseUrlProperty:true /UseHttpClientCreationMethod:true /ClientBaseClass:ClientBase /ConfigurationClass:IClientOptions /InjectHttpClient:false /GenerateSyncMethods:true /GenerateClientInterfaces:true" />
+
+    <ItemGroup>
+      <Compile Include="**/*$(DefaultLanguageSourceExtension)"
+               Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder);$(BaseIntermediateOutputPath)**;$(BaseOutputPath)**;@(Compile)" />
+    </ItemGroup>
+
+  </Target>
+
+  <Target Name="PreClean" BeforeTargets="CoreClean">
+    <Delete Files="$(ClientCode)" />
+  </Target>
+
+</Project>

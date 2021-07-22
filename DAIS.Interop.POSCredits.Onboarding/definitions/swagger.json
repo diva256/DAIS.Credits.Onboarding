@@ -1,0 +1,59 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "",
+    "description": "DSK POS Credits",
+    "version": "v1"
+  },
+  "schemes": [ "https" ],
+  "paths": {
+    "/function/status.php": {
+      "post": {
+        "parameters": [
+          {
+            "in": "body",
+            "required": true,
+            "name": "rq",
+            "schema": { "$ref": "#/definitions/UpdateStatusNotificationRequest" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UpdateStatusNotificationResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "UpdateStatusNotificationRequest": {
+      "type": "object",
+      "properties": {
+        "OrderId": {
+          "type": "string",
+          "default": "0000000000000"
+        },
+        "StatusId": {
+          "type": "integer"
+        }
+      }
+    },
+    "UpdateStatusNotificationResponse": {
+      "type": "object",
+      "properties": {
+        "Status": {
+          "type": "string"
+        },
+        "ErrorId": {
+          "type": "integer"
+        },
+        "ErrorDescription": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
